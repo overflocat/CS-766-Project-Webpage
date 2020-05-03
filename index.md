@@ -19,7 +19,7 @@ Let's first introduce the generative adversarial network (GAN). GAN is a class o
 How does a Generator works? Assume a simple distribution of a latent code z, e.g. normal distribution of 100 dimensions. Under certain transformation, `f(z) = p(x)`, where `p(x)` is the data distribution we want to generate. `f` is modeled as a powerful convolutional neural network. See the figure below:
 
 <p align="center">
-  <img height=500, src="./figures/generator_example.png">
+  <img height=500 src="./figures/generator_example.png">
 </p>
 
 For discriminator in a deep convolutional GAN, it will also be a convolutional neural network, which maps an input image into a possibility of being fake or real.
