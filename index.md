@@ -5,7 +5,7 @@ Access our slides here: [link to the slides](https://docs.google.com/presentatio
 Learning controllable and interpretable generative model has been one of the main pursuit of image synthesis, yet the controllability and interpretability can happen at multiple faucets. Consider the examples in the figure below. If we want to generate these images, what is a reasonable way to generate them in a controllable fashion?
 
 <p align="center">
-  <img src="./figures/teaser.png">
+  <img src="./figures/teaser.png"/>
 </p>
 
 We believe at least one possible solution is to synthesize these images by object parts (e.g. the head, neck, belly, legs, wings of the bird and the background). Such an approach not only provides an explicit way to synthesize fine-grained details according to each specific object part, but also brings a controllability over the synthesis procedure via independently manipulation different parts of generated images.
@@ -35,7 +35,7 @@ In our project we use the structure of GAN. However, to the best of our knowledg
 How to generate images by parts? If we could build the dependency of the latent code and the output of the model, we could control the output by controlling different part of the latent code, and understanding the real-world meaning of the latent code better. Here is an example:
 
 <p align="center">
-  <img height=600, src="./figures/latent_code.png">
+  <img src="./figures/latent_code.png" height="600"/>
 </p>
 
 On the top, there is no clear relationship of the latent code and the generated image, or in other words, the meaning of the latent code is unclear. On the bottom, each dimension of the latent code has a clear meaning - the first dimension describes if the background is brown or not, the second dimension describes if the person has black hair or not, etc.. Therefore, ideally we could change the first dimension of the latent code to change the background when we synthesis the image, while keeping all other parts stable.
@@ -43,7 +43,7 @@ On the top, there is no clear relationship of the latent code and the generated 
 However, how could we achieve this? The first intuition is to directly spit the latent code into different parts, and use different parts to generate different parts of the image. To make things more clear, see the example below:
 
 <p align="center">
-  <img height=600, src="./figures/m1_intuition.png">
+  <img src="./figures/m1_intuition.png" height="600"/>
 </p>
 
 The whole input latent code sampled from a random distribution (for instance, Gaussian distribution with 100 dimensions) could be splitted into two parts, and each part is with 50 dimensions. One part of the latent code is used to generate features only with the hair part, and the other one will be used to generate features only with the face and the background part. Each part of the latent code will be used as the input of a generator `G`, and finally the features generated from different parts of the latent code will be used to syntheses the final output image.
@@ -67,7 +67,7 @@ Firstly, the latent code is splitted into two parts as mentioned before, which a
 The same process will be applied to `Latent Code 2` to get the `Final Feature Map 2`. Here `Encoder e_2s` and `Encoder e_2f` share the same network structure with `Encoder e_1s` and `Encoder e_1f`, but they do not share weights. After all `Final Feature Map #`  (Or in other words, `Final Feature Map 1` and `Final Feature Map 2`) are generated, all `Final Feature Map #` will be summed up to get the `Final Feature Map`.
 
 <p align="center">
-  <img height=400, src="./figures/m1_summation.png">
+  <img src="./figures/m1_summation.png" height="400"/>
 </p>
 
 >Why all feature maps could be summed up? The reason of this is that we apply a Softmax function among all attention maps to make sure that for each pixel in the feature map, the summation of weights provided by the attention map is 1. Therefore the summation will not cause overflow. 
@@ -85,7 +85,7 @@ Previously we mentioned that we could regard attention map as a part-based mask 
 To achieve this we definitely need some constraints and regularizers. The first method we used is to apply Softmax function for different attention maps. See the figure below:
 
 <p align="center">
-  <img height=300, src="./figures/m1_softmax.png">
+  <img src="./figures/m1_softmax.png" height="300"/>
 </p>
 
 For the pixels at the same location in the attention map, a Softmax function will be applied on them to get the final weights (or the masks). After applying Softmax, the maximum value is converted to a number near one while other values will be close to zero. Therefore, each location in the attention maps tends to be exclusive and then every attention map can learn their own part.
@@ -127,7 +127,7 @@ Generally, the pixels inside an image will be grouped into different region grou
 By combining the two intuitions we have our method. Bi-GAN recover the latent code from its generated image. So if we replace the encoder with the region grouping module, our new encoder will only generate part-based code. Bi-GAN will match the recovered code and the real code, thus our code for generation will also be part-based.
 
 <p align="center">
-  <img height=500, src="./figures/m2_intuition.png">
+  <img src="./figures/m2_intuition.png" height="500"/>
 </p>
 
 As our input latent-code is part-based, we could control the input latent code to control the parts in the final generated image.
@@ -163,16 +163,5 @@ We do our experiments on dataset Celeba, which is a dataset of human faces.
 
 
 # References
-
-
-
-
-
-
-
-
-
-
-
 
 
