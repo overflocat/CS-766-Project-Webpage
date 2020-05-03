@@ -8,7 +8,7 @@
 
 - **Access our slides here**: [link to the slides](https://docs.google.com/presentation/d/16T8LvSQ5uj9gnUBBecj8KH3wV3z4Z2RltOnnbTdN4Sw/edit?usp=sharing)
 - **Access our proposal here**: [link to the proposol](./documents/COMP_SCI_766_Proposal.pdf)
-- **Access our mid-term report here**: [link to the mid-term report](./documents/COMP_SCI_766_Midterm_Report)
+- **Access our mid-term report here**: [link to the mid-term report](./documents/COMP_SCI_766_Midterm_Report.pdf)
 - **Access the code of the first method**: [link to the code](./code/code.zip)
 - **Access the code of the second method**: [link to the code](./code/code2.zip)
 
