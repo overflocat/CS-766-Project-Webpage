@@ -1,14 +1,25 @@
-**Access our slides here**: [link to the slides](https://docs.google.com/presentation/d/16T8LvSQ5uj9gnUBBecj8KH3wV3z4Z2RltOnnbTdN4Sw/edit?usp=sharing)
+<p align="center">
+    <b>Author: Zixuan Huang (@zhuang356), Yufei Wang (@ywang2395), Yang Fang (@fang65)</b>
+  <br>
+  <b>[We equally contributed to this project!]</b>
+</p>
+
+# Links
+
+- **Access our slides here**: [link to the slides](https://docs.google.com/presentation/d/16T8LvSQ5uj9gnUBBecj8KH3wV3z4Z2RltOnnbTdN4Sw/edit?usp=sharing)
+- **Access our proposal here**: [link to the proposol](./COMP_SCI_766_Proposal.pdf)
+- **Access our mid-term report here**: [link to the mid-term report](./COMP_SCI_766_Midterm_Report)
 
 # Introduction
 
 Learning controllable and interpretable generative model has been one of the main pursuit of image synthesis, yet the controllability and interpretability can happen at multiple faucets. Consider the examples in the figure below. If we want to generate these images, what is a reasonable way to generate them in a controllable fashion?
 
 <p align="center">
-  <img src="./figures/teaser.png"/>
+  <img src="./figures/face_example.png" height="600"/>
 </p>
 
-We believe at least one possible solution is to synthesize these images by object parts (e.g. the head, neck, belly, legs, wings of the bird and the background). Such an approach not only provides an explicit way to synthesize fine-grained details according to each specific object part, but also brings a controllability over the synthesis procedure via independently manipulation different parts of generated images.
+
+We believe at least one possible solution is to synthesize these images by object parts (e.g. the hair, eyes, nose and mouth). Such an approach not only provides an explicit way to synthesize fine-grained details according to each specific object part, but also brings a controllability over the synthesis procedure via independently manipulation different parts of generated images.
 
 On the other hand, Generative Adversarial Network (GAN) are tremendously successful for image generation. Current state-of-the-art methods along this direction are already able to generate photo-realistic images. By combining our idea with GANs, we could generate both photo-realistic and controllable images by object parts.
 
