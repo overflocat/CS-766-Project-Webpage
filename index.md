@@ -9,15 +9,16 @@
 - **Access our slides here**: [link to the slides](https://docs.google.com/presentation/d/16T8LvSQ5uj9gnUBBecj8KH3wV3z4Z2RltOnnbTdN4Sw/edit?usp=sharing)
 - **Access our proposal here**: [link to the proposol](./COMP_SCI_766_Proposal.pdf)
 - **Access our mid-term report here**: [link to the mid-term report](./COMP_SCI_766_Midterm_Report)
+- **Access the code of the first method**: [link to the code](./code/code.zip)
+- **Access the code of the second method**: [link to the code](./code/code2.zip)
 
 # Introduction
 
 Learning controllable and interpretable generative model has been one of the main pursuit of image synthesis, yet the controllability and interpretability can happen at multiple faucets. Consider the examples in the figure below. If we want to generate these images, what is a reasonable way to generate them in a controllable fashion?
 
 <p align="center">
-  <img src="./figures/face_example.png" height="600"/>
+  <img src="./figures/face_example.png">
 </p>
-
 
 We believe at least one possible solution is to synthesize these images by object parts (e.g. the hair, eyes, nose and mouth). Such an approach not only provides an explicit way to synthesize fine-grained details according to each specific object part, but also brings a controllability over the synthesis procedure via independently manipulation different parts of generated images.
 
