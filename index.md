@@ -7,7 +7,7 @@
 # Links
 
 - **Access our slides here**: [link to the slides](https://docs.google.com/presentation/d/16T8LvSQ5uj9gnUBBecj8KH3wV3z4Z2RltOnnbTdN4Sw/edit?usp=sharing)
-- **Access our proposal here**: [link to the proposol](./documents/COMP_SCI_766_Proposal.pdf)
+- **Access our proposal here**: [link to the proposal](./documents/COMP_SCI_766_Proposal.pdf)
 - **Access our mid-term report here**: [link to the mid-term report](./documents/COMP_SCI_766_Midterm_Report.pdf)
 - **Access the code of the first method**: [link to the code](./code/code.zip)
 - **Access the code of the second method**: [link to the code](./code/code2.zip)
@@ -28,14 +28,14 @@ On the other hand, Generative Adversarial Network (GAN) are tremendously success
 
 Let's first introduce the generative adversarial network (GAN). GAN is a class of machine learning framework invented by Ian Goodfellow and his colleagues in 2014. In a normal GAN, two neural networks contest with each other in a game, of which one is called generator and another one is called discriminator. The goal of the generator is to generate images of the same distribution with the images in the training set, and the goal of the discriminator is to distinguish the images generated and the real images in the training set.
 
-How does the generator works? Assume a simple distribution of a latent code `z`, e.g. normal distribution of 100 dimensions. Under certain transformation, `f(z) = p(x)`, where `p(x)` is the data distribution we want to generate. `f` is modeled as a powerful convolutional neural network. See the figure below:
+How does the generator works? Assume a simple distribution of a latent code `z`, e.g. normal distribution of 100 dimensions. Under certain transformation, `f(z) ~ p(x)`, where `p(x)` is the data distribution we want to generate. `f` is modeled as a powerful convolutional neural network. See the figure below:
 
 <p align="center">
   <img src="./figures/generator_example.png" height="600"/>
 </p>
 
 
-For discriminator in a deep convolutional GAN, it will also be a convolutional neural network, which maps an input image into a possibility of being fake or real.
+For discriminator in a deep convolutional GAN, it will also be a convolutional neural network, which maps an input image into the probability of being fake or real.
 
 In our project we use the structure of GAN. To the best of our knowledge, we do not think there are any papers sharing exactly the same idea of composing natural images via part representation with GAN. However, there exists many relevant works focusing on disentangling the generation process or providing interpretable results. For instance, Info-GAN proposed to learn more interpretable and controllable models by maximizing the lower bound of the mutual information between the latent code and the generated images. However, they did not model object parts explicitly, nor demonstrate any experimental results over relatively challenging datasets. Another closely related one is Fine-GAN, which proposed to model and object as a combination of background, foreground shape and background appearance. They also disentangled different factors by maximizing the mutual information similarly to Info-GAN. LR-GAN is also highly relevant, where they composed the image by recursively synthesizing and stitching background, foreground shape and transformation.
 
@@ -45,7 +45,7 @@ In our project we use the structure of GAN. To the best of our knowledge, we do 
 
 ### Intuition
 
-How to generate images by parts? If we could build the dependency of the latent code and the output of the model, we could control the output by controlling different part of the latent code, and understanding the real-world meaning of the latent code better. Here is an example:
+How can we generate images by parts? If we could build the dependency of the latent code and the output of the model, we could control the output by controlling different part of the latent code, and understanding the real-world meaning of the latent code better. Here is an example:
 
 <p align="center">
   <img src="./figures/latent_code.png" height="700"/>
@@ -63,7 +63,7 @@ However, how could we achieve this? The first intuition is to directly spit the 
 
 The whole input latent code sampled from a random distribution (for instance, Gaussian distribution with 100 dimensions) could be splitted into two parts, and each part is with 50 dimensions. One part of the latent code is used to generate features only with the hair part, and the other one will be used to generate features only with the face and the background part. Each part of the latent code will be used as the input of a generator `G`, and finally the features generated from different parts of the latent code will be combined to syntheses the final output image.
 
-However, our data is unlabelled, which means that we do not have labelled parts (or the semantic segmentation) of the training images. Therefore, we in our implementation we use attention maps with constraints to make the model learn how to distinguish different image parts by itself.
+However, our data is unlabelled, which means that we do not have labelled parts (or the segmentation masks) of the training images. Therefore, in our implementation we use attention maps with constraints to make the model learn how to distinguish different image parts by itself.
 
 ### Implementation
 
@@ -74,7 +74,7 @@ Here is the implementation of our idea. The figure below illustrated the structu
 </p>
 
 
-The latent code is splitted into two parts as mentioned before, which are `Latent Code 1` and `Latent Code 2`. We will focus on `Latent Code 1` first. Both of these latent code are sampled from a simple random distribution like Gaussian distribution.
+The latent code is splitted into two parts as mentioned before, which are `Latent Code 1` and `Latent Code 2`. We will focus on `Latent Code 1` first. Both of these latent codes are sampled from a simple random distribution like Gaussian distribution.
 
 `Latent Code 1` will be used as the input of `Encoder e_1s` and `Encoder e_1f`. Both of `Encoder e_1s` and `Encoder e_1f` are convolutional neural networks, however, their network structure are not the same with each other and they do not share weights. The output of `Encoder e_1s` is an attention map, which is a `1xHxW` matrix; and the output of `Encoder e_1f` is the feature map, which is a `CxHxW` matrix, in which `C` is the number of channels in the feature map. Then we will do an element-wise product of the attention map and each channel of the feature map to get the `Final Feature Map 1`, which is also a `CxHxW` matrix.
 
@@ -85,11 +85,6 @@ The same process will be applied to `Latent Code 2` to get the `Final Feature Ma
 <p align="center">
   <img src="./figures/m1_summation.png" height="500"/>
 </p>
-
-
->Why all feature maps could be summed up? The reason of this is that we apply a Softmax function among all attention maps to make sure that for each pixel in the feature map, the summation of weights provided by the attention map is 1. Therefore the summation will not cause overflow. 
->
->Again, more details will be given in the next two sections.
 
 Finally the `Final Feature Map` will be passed to the `Final Encoder e_final` to generate the final output image, which is a `3xHxW` image (for color images). `Final Encoder e_final` is also a convolutional neural network.
 
@@ -108,12 +103,10 @@ To achieve this we definitely need some constraints and regularizers. The first 
 
 For the pixels at the same location in the attention map, a Softmax function will be applied on them to get the final weights (or the masks). After applying Softmax, the maximum value is converted to a number near one while other values will be close to zero. Therefore, each location in the attention maps tends to be exclusive and then every attention map can learn their own part.
 
-And we will get a great property: After applying Softmax, the summation of weights from the same location in the final masks from attention map will be 1. Therefore, we could directly multiply the masks with the feature maps and sum all of the feature maps up.
 
 #### Regularizers for Attention Maps
 
-Only Softmax is not enough. Softmax will fail if the input is very close. Due to the random initialization, this can happen. We use additional regularizers as loss function to make different attention maps focus on different parts. After Softmax, the values of attention in the same location sums up to 1 and thus can be treated as a probabilistic distribution. Therefore, if we minimize the information entropy of all such distributions, the final attention map will be exclusive across all locations. The regularization term could be added to the final loss function.
-
+Only Softmax is not enough. Softmax will fail if the input is very close. Due to the random initialization, this can happen. We use additional regularizers as loss function to make different attention maps focus on different parts. After Softmax, the values of attention in the same location sums up to 1 and thus can be treated as a probabilistic distribution. Therefore, if we minimize the information entropy of all such distributions, the final attention map will be exclusive across all locations. 
 ## Method 2
 
 ### Intuition
@@ -140,7 +133,7 @@ Another intuition comes from a relevant paper [Zixuan Huang, CVPR' 20], which se
 </p>
 
 
-Generally, the pixels inside an image will be grouped into different region groups according to the part dictionary, and all part dictionary could be learned during the training process. For simplicity we won't too much details about this paper here. If you have interest, as this paper is accepted by CVPR 2020 as an oral paper, welcome to listen to the presentation at June online! 
+Technically, the pixels inside an image will be grouped into different regions according to the part dictionary, and all part dictionary could be learned automatically during the training process. For simplicity we won't too much details about this paper here.
 
 #### Combine Two Ideas Together
 
@@ -187,8 +180,6 @@ At right side is the final synthesis result. Most of the images look realistic, 
 
 There are still a lot of aspects could be improved. For instance, our method generalize well with two parts, but when with more parts the result will be worse. And sometimes, the attention map will be noisy for some samples. We may need more regularizers to control the continuous of the pixels in the attention map.
 
-Another possible future work is to directly control the regions of different parts in the final image. In our current structure, we could control different parts in the image by modifying different part of the latent code, however we could not directly control the corresponding regions of different parts in the final image. When latent code changes, the region of the current part will also change. For instance, if we want to change the first part of the latent code to change the background, not only the color of the background will change but also the regions of the background will change (for instance sometimes the background will be larger and the human face will be smaller).
-
 We will keep working on these directions in the future.
 
 ## Method 2
@@ -210,9 +201,9 @@ Again, this is still a great direction to try and a lot of future work could be 
 
 # Conclusion
 
-In this course project we focus on generating images by parts in an unsupervised manner. We tried different methods and directions, which is mentioned above as method 1 and method 2. Method 1 directly split the latent code into different parts, and use the attention mechanism to let different parts of the latent code focus on different parts of the final output image. These methods work well and we get promising result. Method 2 basically inspired by Bi-GAN and the region grouping paper, in which the encoder in Bi-GAN is replaced by the region grouping module to implicitly make the converted latent code also part-based. We do not get promising results due to the resource and time limit, however we analyze the result and found the possible reason of it.
+In this course project we focus on generating images by parts in an unsupervised manner. We tried different methods and directions, which is mentioned above as method 1 and method 2. Method 1 directly split the latent code into different parts, and use the attention mechanism to let different parts of the latent code focus on different parts of the final output image. These methods work well and we get promising result. Method 2 is basically inspired by Bi-GAN and the region grouping paper, in which the encoder in Bi-GAN is replaced by the region grouping module to implicitly make the converted latent code also part-based. We do not get promising results due to the resource and time limit, however we analyze the result and found the possible reason of it.
 
-We will keep working on this topic and it is really interesting and intriguing, and hopefully you will see our formal paper in the future. Thanks for reading our report!
+We will keep working on this topic as we found it quite interesting and intriguing. Thanks for reading our report!
 
 # References
 
