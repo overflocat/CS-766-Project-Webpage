@@ -6,9 +6,11 @@
 
 # Links
 
-- **Access our slides here**: [link to the slides](https://docs.google.com/presentation/d/16T8LvSQ5uj9gnUBBecj8KH3wV3z4Z2RltOnnbTdN4Sw/edit?usp=sharing)
-- **Access our proposal here**: [link to the proposal](./documents/COMP_SCI_766_Proposal.pdf)
-- **Access our mid-term report here**: [link to the mid-term report](./documents/COMP_SCI_766_Midterm_Report.pdf)
+- **Access our slides**: [link to the slides](https://docs.google.com/presentation/d/16T8LvSQ5uj9gnUBBecj8KH3wV3z4Z2RltOnnbTdN4Sw/edit?usp=sharing)
+- **Access our presentation video**: [link to the video](https://drive.google.com/file/d/1Az0G9cULo807lTZgIKSU0mhfir4VKV6p/view?usp=sharing)
+- **[Access part 2 of our presentation video]**: [link to the video](https://drive.google.com/file/d/1fkJ4xFgea_GS2D_9CAllYRPfic48Ae_V/view?usp=sharing)
+- **Access our proposal**: [link to the proposal](./documents/COMP_SCI_766_Proposal.pdf)
+- **Access our mid-term report**: [link to the mid-term report](./documents/COMP_SCI_766_Midterm_Report.pdf)
 - **Access the code of the first method**: [link to the code](./code/code.zip)
 - **Access the code of the second method**: [link to the code](./code/code2.zip)
 
