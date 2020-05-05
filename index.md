@@ -135,7 +135,7 @@ Another intuition comes from a relevant paper [Zixuan Huang, CVPR' 20], which se
 </p>
 
 
-Technically, the pixels inside an image will be grouped into different regions according to the part dictionary, and all part dictionary could be learned automatically during the training process. For simplicity we won't too much details about this paper here.
+Technically, the pixels inside an image will be grouped into different regions according to the part dictionary, and all part dictionary could be learned automatically during the training process. For simplicity we won't mention too much details about this paper here. If you are interested in this part, you can watch Zixuan's presentation later, since this paper is accepted by CVPR 2020 as an oral paper.
 
 #### Combine Two Ideas Together
 
@@ -205,7 +205,9 @@ Again, this is still a great direction to try and a lot of future work could be 
 
 In this course project we focus on generating images by parts in an unsupervised manner. We tried different methods and directions, which is mentioned above as method 1 and method 2. Method 1 directly split the latent code into different parts, and use the attention mechanism to let different parts of the latent code focus on different parts of the final output image. These methods work well and we get promising result. Method 2 is basically inspired by Bi-GAN and the region grouping paper, in which the encoder in Bi-GAN is replaced by the region grouping module to implicitly make the converted latent code also part-based. We do not get promising results due to the resource and time limit, however we analyze the result and found the possible reason of it.
 
-We will keep working on this topic as we found it quite interesting and intriguing. Thanks for reading our report!
+We will keep working on this topic as we found it quite interesting and intriguing. (*^-^)／＼(*^-^*)／＼(^-^*)
+
+Thanks for reading our report (´・ω・`)/~~
 
 # References
 
