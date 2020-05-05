@@ -205,7 +205,7 @@ Again, this is still a great direction to try and a lot of future work could be 
 
 In this course project we focus on generating images by parts in an unsupervised manner. We tried different methods and directions, which is mentioned above as method 1 and method 2. Method 1 directly split the latent code into different parts, and use the attention mechanism to let different parts of the latent code focus on different parts of the final output image. These methods work well and we get promising result. Method 2 is basically inspired by Bi-GAN and the region grouping paper, in which the encoder in Bi-GAN is replaced by the region grouping module to implicitly make the converted latent code also part-based. We do not get promising results due to the resource and time limit, however we analyze the result and found the possible reason of it.
 
-We will keep working on this topic as we found it quite interesting and intriguing. (*^-^)／＼(*^-^*)／＼(^-^*)
+We will keep working on this topic as we found it quite interesting and intriguing. (\*^-^)／＼(\*^-^\*)／＼(^-^\*)
 
 Thanks for reading our report (´・ω・`)/~~
 
